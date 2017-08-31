@@ -1,3 +1,5 @@
+% DO NOT USE--obsolete, and never really worked in the first place
+
 function r = IsMoving(StatusBits)
 % Read StatusBits returned by GetStatusBits_Bits method and determine if
 % the motor shaft is moving; Return 1 if moving, return 0 if stationary
