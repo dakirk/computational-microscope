@@ -94,7 +94,11 @@ global illum
 inputStr = get(hObject,'String') %Saves input as string
 inputDouble = str2double(inputStr) %Changes that string to a double
 if ~isnan(inputDouble) %Checks if not a number, informs user that input is invalid
-    illum.pitch(1) = inputDouble
+    if inputDouble > 0
+        illum.pitch(1) = inputDouble
+    else
+        disp('Invalid entry (pitch must be greater than 0)')
+    end
 else
     disp('Not recognized')
 end
@@ -131,7 +135,11 @@ global illum
 inputStr = get(hObject,'String') %Saves input as string
 inputDouble = str2double(inputStr) %Changes that string to a double
 if ~isnan(inputDouble) %Checks if not a number, informs user that input is invalid
-    illum.pitch(2) = inputDouble
+    if inputDouble > 0
+        illum.pitch(2) = inputDouble
+    else
+        disp('Invalid entry (pitch must be greater than 0)')
+    end
 else
     disp('Not recognized')
 end
@@ -214,7 +222,11 @@ global illum
 inputStr = get(hObject,'String') %Saves input as string
 inputDouble = str2double(inputStr) %Changes that string to a double
 if ~isnan(inputDouble) %Checks if not a number, informs user that input is invalid
-    illum.Mag = inputDouble
+    if inputDouble > 0
+        illum.Mag = inputDouble
+    else
+        disp('Invalid entry (magnification must be greater than 0)')
+    end
 else
     disp('Not recognized')
 end
@@ -248,7 +260,11 @@ global illum
 inputStr = get(hObject,'String') %Saves input as string
 inputDouble = str2double(inputStr) %Changes that string to a double
 if ~isnan(inputDouble) %Checks if not a number, informs user that input is invalid
-    illum.fL = inputDouble
+    if inputDouble >= 0
+        illum.fL = inputDouble
+    else
+        disp('Invalid entry (focal length can''t be negative)')
+    end
 else
     disp('Not recognized')
 end
@@ -282,8 +298,12 @@ global illum
 
 inputStr = get(hObject,'String') %Saves input as string
 inputDouble = str2double(inputStr) %Changes that string to a double
-if ~isnan(inputDouble) & inputDouble >= 0 & inputDouble <= 6 %Checks if not a valid number, informs user that input is invalid
-    illum.centerPos(1) = inputDouble
+if ~isnan(inputDouble) %Checks if not a valid number, informs user that input is invalid
+    if inputDouble >= 0 & inputDouble <= 6
+        illum.centerPos(1) = inputDouble
+    else
+        disp('Invalid entry (center position must be between 0 and 6 millimeters)')
+    end
 else
     disp('Not recognized')
 end
@@ -320,8 +340,12 @@ global illum
 
 inputStr = get(hObject,'String') %Saves input as string
 inputDouble = str2double(inputStr) %Changes that string to a double
-if ~isnan(inputDouble) & inputDouble >= 0 & inputDouble <= 6 %Checks if not a valid number, informs user that input is invalid
-    illum.centerPos(2) = inputDouble
+if ~isnan(inputDouble) %Checks if not a valid number, informs user that input is invalid
+    if inputDouble >= 0 & inputDouble <= 6
+        illum.centerPos(2) = inputDouble
+    else
+        disp('Invalid entry (center position must be between 0 and 6 millimeters)')
+    end
 else
     disp('Not recognized')
 end
