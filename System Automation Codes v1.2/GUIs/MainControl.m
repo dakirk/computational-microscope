@@ -23,7 +23,11 @@ VERSION HISTORY
     -Added compatibility with new circular grid settings
 
 TO DO:
-    -find a way to allow the system to work with different cameras
+    -Create new version for Blackfly S camera
+    -Allow user to switch between Blackfly S and Grasshopper (or add
+    installer option)
+    -Remove re-initialization of camera in every run
+    -Find a way to allow the system to work with different cameras
     -Add "launcher" program
         -Launcher is shortcut that points to main directory
         -Auto-generated during installation?
@@ -134,7 +138,7 @@ illum = struct
 illum.mainPath = mainPath%'D:\David\SP-IRIS Project'
 
 if exist([illum.mainPath, '\ConfigVars.mat'], 'file');
-    disp('Config file exists. Loading.')
+    disp('Config file exists. Loading...')
     load([illum.mainPath, '\ConfigVars']);
     disp('Done.')
 else
@@ -167,7 +171,8 @@ c1Set.gam = 0.5;    %turns gamma modifications by camera to min. value
 c1Set.sharp = 0;    %Turns off HP filter in camera
 c1Set.br = 0;       %Turns brightness down to lowest value
 
-%Camera 2 Setting Initialization
+%Camera 2 Setting Initialization <--unused right now
+%{
 global c2Set
 c2Set.exp = -7.58;  %Sets exposure percentage to lowest value (no image change observed)
 c2Set.shut = 100;   %Sets camera shutter time to 500ms
@@ -176,19 +181,24 @@ c2Set.gam = 0.5;    %turns gamma modifications by camera to min. value
 c2Set.sharp = 0;    %Turns off HP filter in camera
 c2Set.br = 0;       %Turns brightness down to lowest value
 c2Set.fr = 6.5;     %Sets camera frame rate to 6.5 ms(?)
+%}
 
 %Initialize Camera 1
 global c1
-c1 = videoinput('pointgrey', 1, 'F7_Mono16_2048x2048_Mode0'); %Opens camera 1 for sample acquisition in 16 bit mode with no binning
-c1Par = getselectedsource(c1);     %Grabs handle controlling cam 1 settings
-setC1Param(c1,c1Par,c1Set);        %Initializes camera 1 settings
+c1 = videoinput('winvideo', 2, 'RGB32_2448x2048'); %Opens camera 1 for sample acquisition in 16 bit mode with no binning
 
-%Initialize Camera 2
+%NOTE: following two lines don't work with winvideo drivers
+
+%c1Par = getselectedsource(c1);     %Grabs handle controlling cam 1 settings
+%setC1Param(c1,c1Par,c1Set);        %Initializes camera 1 settings
+
+%Initialize Camera 2 <--unused right now
+%{
 global c2
 c2 = videoinput('pointgrey', 2, 'F7_Mono16_2592x1944_Mode0');
 c2Par = getselectedsource(c2);  %Grabs handle controlling cam 2 settings
 setC2Param(c2,c2Par,c2Set); %Initializes camera 2 settings
-
+%}
 disp('Done.')
 
 %% Date formatting

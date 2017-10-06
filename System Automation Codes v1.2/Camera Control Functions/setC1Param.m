@@ -23,9 +23,9 @@ cam.TriggerRepeat = 0; %Sets Single image acquisition for camera
 cam.ReturnedColorspace = 'grayscale';
 triggerconfig(cam, 'immediate'); %Sets camera to take immediate image during trigger command
 %Set camera modes to manual
-camSet.ExposureMode = 'Manual';
-camSet.GainMode = 'Manual';
-camSet.ShutterMode = 'Manual';
+%camSet.ExposureMode = 'Manual';
+%camSet.GainMode = 'Manual';
+%camSet.ShutterMode = 'Manual';
 camSet.Shutter = pStruct.shut; %Sets shutter exposure time (ms)
 camSet.Exposure = pStruct.exp;
 % camSet.FrameRate = 2.42;

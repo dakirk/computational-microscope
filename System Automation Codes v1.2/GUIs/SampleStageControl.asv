@@ -78,8 +78,7 @@ c1 = videoinput('winvideo', 2, 'RGB32_2448x2048') %Opens camera 1 for sample acq
 
 axes(handles.axes1);
 start(c1)
-imgMat = getdata(c1);
-imgMat = imgMat(:,:,(1:3));
+
 imshow(mat2gray(rgb2gray(imgMat)));
 
 %{
@@ -166,9 +165,7 @@ set(handles.text12, 'Visible', 'On')
 global c1
 axes(handles.axes1);
 start(c1)
-imgMat = getdata(c1);
-imgMat = imgMat(:,:,(1:3));
-imshow(mat2gray(rgb2gray(imgMat)));
+imshow(mat2gray(getdata(c1)));
 set(handles.text12, 'Visible', 'Off')
 
 
@@ -209,9 +206,7 @@ set(handles.text12, 'Visible', 'On')
 global c1
 axes(handles.axes1);
 start(c1)
-imgMat = getdata(c1);
-imgMat = imgMat(:,:,(1:3));
-imshow(mat2gray(rgb2gray(imgMat)));
+imshow(mat2gray(getdata(c1)));
 set(handles.text12, 'Visible', 'Off')
 
 % --- Text box to control position of y-motor
@@ -257,9 +252,7 @@ set(handles.text12, 'Visible', 'On')
 global c1
 axes(handles.axes1);
 start(c1)
-imgMat = getdata(c1);
-imgMat = imgMat(:,:,(1:3));
-imshow(mat2gray(rgb2gray(imgMat)));
+imshow(mat2gray(getdata(c1)));
 set(handles.text12, 'Visible', 'Off')
 
 % --- Executes during object creation, after setting all properties.
@@ -299,9 +292,7 @@ set(handles.text12, 'Visible', 'On')
 global c1
 axes(handles.axes1);
 start(c1)
-imgMat = getdata(c1);
-imgMat = imgMat(:,:,(1:3));
-imshow(mat2gray(rgb2gray(imgMat)));
+imshow(mat2gray(getdata(c1)));
 set(handles.text12, 'Visible', 'Off')
 
 
@@ -348,9 +339,7 @@ set(handles.text12, 'Visible', 'On')
 global c1
 axes(handles.axes1);
 start(c1)
-imgMat = getdata(c1);
-imgMat = imgMat(:,:,(1:3));
-imshow(mat2gray(rgb2gray(imgMat)));
+imshow(mat2gray(getdata(c1)));
 set(handles.text12, 'Visible', 'Off')
 
 
@@ -391,9 +380,7 @@ set(handles.text12, 'Visible', 'On')
 global c1
 axes(handles.axes1);
 start(c1)
-imgMat = getdata(c1);
-imgMat = imgMat(:,:,(1:3));
-imshow(mat2gray(rgb2gray(imgMat)));
+imshow(mat2gray(getdata(c1)));
 set(handles.text12, 'Visible', 'Off')
 
 
@@ -408,9 +395,7 @@ set(handles.text12, 'Visible', 'On')
 global c1
 axes(handles.axes1);
 start(c1)
-imgMat = getdata(c1);
-imgMat = imgMat(:,:,(1:3));
-imshow(mat2gray(rgb2gray(imgMat)));
+imshow(mat2gray(getdata(c1)));
 set(handles.text12, 'Visible', 'Off')
 
 
