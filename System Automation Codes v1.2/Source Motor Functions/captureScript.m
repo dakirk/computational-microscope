@@ -97,7 +97,8 @@ c1Set.gam = 0.5;    %turns gamma modifications by camera to min. value
 c1Set.sharp = 0;    %Turns off HP filter in camera
 c1Set.br = 0;       %Turns brightness down to lowest value
 
-%Camera 2 Setting Initialization
+%Camera 2 Setting Initialization <--unused currently
+%{
 c2Set.exp = -7.58;  %Sets exposure percentage to lowest value (no image change observed)
 c2Set.shut = 100;   %Sets camera shutter time to 500ms
 c2Set.gn = 0;       %Turns off camera gain
@@ -105,32 +106,36 @@ c2Set.gam = 0.5;    %turns gamma modifications by camera to min. value
 c2Set.sharp = 0;    %Turns off HP filter in camera
 c2Set.br = 0;       %Turns brightness down to lowest value
 c2Set.fr = 6.5;     %Sets camera frame rate to 6.5 ms(?)
+%}
 
 %-----------------------------Camera Initialization-----------------------%
 %%
 %Preset Camera Folder Initialization
 c1Fol = 'Camera 1';
-c2Fol = 'Camera 2';
+%c2Fol = 'Camera 2';
 mkdir([illum.mainPath '\Data\' date '\' datFol '\' c1Fol]); %Generate folder pathway for saving camera 1 images
-mkdir([illum.mainPath '\Data\' date '\' datFol '\' c2Fol]); %Generate folder pathway for saving camera 2 images
+%mkdir([illum.mainPath '\Data\' date '\' datFol '\' c2Fol]); %Generate folder pathway for saving camera 2 images
 
 %Initialize Camera 1
-c1 = videoinput('pointgrey', 1, 'F7_Mono16_2048x2048_Mode0'); %Opens camera 1 for sample acquisition in 16 bit mode with no binning
-c1Par = getselectedsource(c1);     %Grabs handle controlling cam 1 settings
-setC1Param(c1,c1Par,c1Set);        %Initializes camera 1 settings
+global c1
+c1 = videoinput('winvideo', 2, 'RGB32_2448x2048'); %Opens camera 1 for sample acquisition in 16 bit mode with no binning
+c1.ReturnedColorSpace = 'grayscale';
+%c1Par = getselectedsource(c1);     %Grabs handle controlling cam 1 settings
+%setC1Param(c1,c1Par,c1Set);        %Initializes camera 1 settings
 c1.FramesPerTrigger = 1
 triggerconfig(c1, 'manual');
 c1.TriggerRepeat = size(illumPos, 1)-1 %reserves number of images to take
 
 
-%Initialize Camera 2
+%Initialize Camera 2 <--unused currently
+%{
 c2 = videoinput('pointgrey', 2, 'F7_Mono16_2592x1944_Mode0');
 c2Par = getselectedsource(c2);  %Grabs handle controlling cam 2 settings
 setC2Param(c2,c2Par,c2Set); %Initializes camera 2 settings
 c2.FramesPerTrigger = 1
 triggerconfig(c2, 'manual');
 c2.TriggerRepeat = size(illumPos, 1)-1 %reserves number of images to take
-
+%}
 
 %-------------------------------------------------------------------------%
 %------------------------Source Motor Initialization----------------------%
@@ -143,12 +148,12 @@ global m2
 %--------------------------------Acquire Data-----------------------------%
 %%
 
-c1Mat = uint16(zeros(2048,2048,size(illumPos, 1))); %Preallocates 3-D matrix for saving images
-c2Mat = uint16(zeros(1944,2592,size(illumPos, 1))); %Preallocates 3-D matrix for saving images
+c1Mat = uint16(zeros(2048,2448,size(illumPos, 1))); %Preallocates 3-D matrix for saving images
+%c2Mat = uint16(zeros(1944,2592,size(illumPos, 1))); %Preallocates 3-D matrix for saving images
 
 num = illumPos(1); %Grabs initial image number in source grid
 start(c1)
-start(c2)
+%start(c2) <--unused currently
 
 for k = 1:size(illumPos,1)
     tic
@@ -174,9 +179,11 @@ for k = 1:size(illumPos,1)
     end
     %}
     
-    trigger(c2)
+    %trigger(c2) <--unused currently
     trigger(c1)
-    pause(.5)
+    pause(.8)
+    disp('Image acquired.')
+    %pause(.5)
 
     
 
@@ -187,14 +194,16 @@ num = illumPos(1);
 %%
 for k = 1:size(illumPos,1)
     %pause(.5)
-    c1Mat(:,:,k) = getdata(c1,c1.FramesPerTrigger);
+    imgMat = getdata(c1,c1.FramesPerTrigger,'uint16');
+    %imgMat = mat2gray(imgMat(:,:,(1:3))); %Convert matrix to grayscale
+    c1Mat(:,:,k) = imgMat; %Temporary? takes only one layer of image
     num = illumPos(k,1); %Grabs initial image number in source grid
     numReadable = sprintf('%.3d', num) %makes file names start with extra zeros if not 3 digits (ex: 001, 002, etc.)
     imwrite(c1Mat(:,:,k),[illum.mainPath '\Data\' date '\' datFol '\' c1Fol '\' fName numReadable '.' imType]);
 
-    c2Mat(:,:,k) = getdata(c2,c2.FramesPerTrigger);
+    %c2Mat(:,:,k) = getdata(c2,c2.FramesPerTrigger);
     %imwrite(getdata(c2),[illum.mainPath '\Data\' date '\' datFol '\' c2Fol '\' fName numReadable '.' imType]);
-    imwrite(c2Mat(:,:,k),[illum.mainPath '\Data\' date '\' datFol '\' c2Fol '\' fName numReadable '.' imType]);
+    %imwrite(c2Mat(:,:,k),[illum.mainPath '\Data\' date '\' datFol '\' c2Fol '\' fName numReadable '.' imType]);
 
 end
 disp(toc);
@@ -209,5 +218,6 @@ m1.MoveHome(0,0);
 m2.MoveHome(0,0);
 finalTime = toc(tstart)
 delete(c1)
-delete(c2)
+%delete(c2)
+clear c1
 %-------------------------------------------------------------------------%

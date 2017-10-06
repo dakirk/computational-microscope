@@ -75,12 +75,16 @@ c1 = videoinput('winvideo', 2, 'RGB32_2448x2048') %Opens camera 1 for sample acq
 %c1Par = getselectedsource(c1);     %Grabs handle controlling cam 1 settings
 %setC1Param(c1,c1Par,c1Set);        %Initializes camera 1 settings
 
-
-axes(handles.axes1);
+set(handles.text12, 'Visible', 'On') %make "loading" text visible
+axes(handles.axes1); %select axis object to display image on
 start(c1)
-imgMat = getdata(c1);
-imgMat = imgMat(:,:,(1:3));
-imshow(mat2gray(rgb2gray(imgMat)));
+imgMat = getdata(c1); %get camera image as 4D matrix
+wait(c1);
+disp('Image acquired.')
+imgMat = imgMat(:,:,(1:3)); %trim 4th layer from matrix
+imshow(mat2gray(rgb2gray(imgMat))); %convert new 3D matrix to b&w image
+set(handles.text12, 'Visible', 'Off') %hide "loading text"
+
 
 %{
 set(handles.text2,'String','Connecting...')
@@ -275,7 +279,7 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-% --- Executes on button press in pushbutton2.
+% --- Homes y-motor.
 function pushbutton2_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -367,7 +371,7 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-% --- Executes on button press in pushbutton1.
+% --- Homes x-motor.
 function pushbutton1_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -409,6 +413,7 @@ global c1
 axes(handles.axes1);
 start(c1)
 imgMat = getdata(c1);
+pause(1);
 imgMat = imgMat(:,:,(1:3));
 imshow(mat2gray(rgb2gray(imgMat)));
 set(handles.text12, 'Visible', 'Off')

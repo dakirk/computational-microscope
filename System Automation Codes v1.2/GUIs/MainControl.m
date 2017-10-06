@@ -21,9 +21,10 @@ VERSION HISTORY
         -Installer moves a zip file containing all code in proper
         directories into the main directory, and unzips it there
     -Added compatibility with new circular grid settings
+10/5/17: Version 1.2b
+    -New version for Blackfly S camera
 
 TO DO:
-    -Create new version for Blackfly S camera
     -Allow user to switch between Blackfly S and Grasshopper (or add
     installer option)
     -Remove re-initialization of camera in every run
