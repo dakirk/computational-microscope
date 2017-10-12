@@ -71,7 +71,7 @@ c1Set.br = 0;       %Turns brightness down to lowest value
 
 global c1
 %Initialize Camera 1
-c1 = videoinput('winvideo', 2, 'RGB32_2448x2048') %Opens camera 1 for sample acquisition in 16 bit mode with no binning
+c1 = videoinput('winvideo', 2, 'RGB32_2048x2048') %Opens camera 1 for sample acquisition in 16 bit mode with no binning
 %c1Par = getselectedsource(c1);     %Grabs handle controlling cam 1 settings
 %setC1Param(c1,c1Par,c1Set);        %Initializes camera 1 settings
 

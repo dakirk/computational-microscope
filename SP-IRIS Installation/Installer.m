@@ -113,7 +113,7 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global illum
-directory = uigetdir('D:\David\'); %Allows user to select a new path
+directory = uigetdir(pwd); %Allows user to select a new path
 if directory ~= 0 %If the user selects something (and therefore uigetdir doesn't return zero), set their input as the new file path
     illum.mainPath = directory
 end
@@ -141,8 +141,10 @@ illum.NAval = [0 1]; %Illumination NA range, not currently used
 illum.fpath = strcat([illum.mainPath, '\Documentation\Source Grids']);
 %}
 % Creates necessary subfolders
-mkdir([illum.mainPath '\Data'])
-mkdir([illum.mainPath '\Documentation'])
+disp('Creating new folders...')
+mkdir([illum.mainPath '\Data']);
+mkdir([illum.mainPath '\Documentation']);
+disp('Done')
 
 % Creates config file
 %{
@@ -152,11 +154,13 @@ save(savePath,'illum')
 
 % Copies zipped code from installer folder to the new main folder and
 % unzips it
-currPath = mfilename('fullpath')
-currPath = strrep(currPath,'\Installer', '')
-copyfile('System Automation Codes.zip', illum.mainPath)
-cd(illum.mainPath)
-unzip('System Automation Codes.zip')
+disp('Installing updated code...')
+currPath = mfilename('fullpath');
+currPath = strrep(currPath,'\Installer', '');
+copyfile('System Automation Codes.zip', illum.mainPath);
+cd(illum.mainPath);
+unzip('System Automation Codes.zip');
+disp('Done')
 
 % Adds new code to path
 addpath(genpath('System Automation Codes'))

@@ -118,7 +118,7 @@ mkdir([illum.mainPath '\Data\' date '\' datFol '\' c1Fol]); %Generate folder pat
 
 %Initialize Camera 1
 global c1
-c1 = videoinput('winvideo', 2, 'RGB32_2448x2048'); %Opens camera 1 for sample acquisition in 16 bit mode with no binning
+c1 = videoinput('winvideo', 2, 'RGB32_2048x2048'); %Opens camera 1 for sample acquisition in 16 bit mode with no binning
 c1.ReturnedColorSpace = 'grayscale';
 %c1Par = getselectedsource(c1);     %Grabs handle controlling cam 1 settings
 %setC1Param(c1,c1Par,c1Set);        %Initializes camera 1 settings
@@ -154,40 +154,27 @@ c1Mat = uint16(zeros(2048,2448,size(illumPos, 1))); %Preallocates 3-D matrix for
 num = illumPos(1); %Grabs initial image number in source grid
 start(c1)
 %start(c2) <--unused currently
+totalImages = sprintf('%.3d',size(illumPos,1));
 
 for k = 1:size(illumPos,1)
     tic
     num = illumPos(k,1); %Grabs initial image number in source grid
-    numReadable = sprintf('%.3d', num) %makes file names start with extra zeros if not 3 digits (ex: 001, 002, etc.)
-
+    %numReadable = sprintf('%.3d', num); %makes file names start with extra zeros if not 3 digits (ex: 001, 002, etc.)
+    disp('');
+    disp(['Logging image ' numReadable ' of ' totalImages])
+    
     %Translate Motors to grid position'
     moveMotor_Basic(m1,illumPos(k,2));
-    %waitForMovement(m1,illumPos(k,2));
     moveMotor_Basic(m2,illumPos(k,3));
-    %waitForMovement(m2,illumPos(k,3));
-    movementTime = toc
+    movementTime = toc;
     disp(['Movement time: ', num2str(movementTime)])
-    if movementTime < .7
-        pause(.7-movementTime)
-    end
-    
-    %{
-    if (k == 1)
-        pause(10);
-    else
-        pause(5);
-    end
-    %}
+    pause(.4);
     
     %trigger(c2) <--unused currently
     trigger(c1)
-    pause(.8)
-    disp('Image acquired.')
-    %pause(.5)
+    wait(c1,2,'logging') %waits for logging to complete
 
-    
-
-    disp(['Total loop time: ', num2str(toc)])
+    disp(['Total loop time: ', num2str(toc), '\n'])
 end
 
 num = illumPos(1);
@@ -198,8 +185,10 @@ for k = 1:size(illumPos,1)
     %imgMat = mat2gray(imgMat(:,:,(1:3))); %Convert matrix to grayscale
     c1Mat(:,:,k) = imgMat; %Temporary? takes only one layer of image
     num = illumPos(k,1); %Grabs initial image number in source grid
-    numReadable = sprintf('%.3d', num) %makes file names start with extra zeros if not 3 digits (ex: 001, 002, etc.)
+    numReadable = sprintf('%.3d', num); %makes file names start with extra zeros if not 3 digits (ex: 001, 002, etc.)
     imwrite(c1Mat(:,:,k),[illum.mainPath '\Data\' date '\' datFol '\' c1Fol '\' fName numReadable '.' imType]);
+    disp('');
+    disp(['Saving image ' numReadable ' of ' totalImages])
 
     %c2Mat(:,:,k) = getdata(c2,c2.FramesPerTrigger);
     %imwrite(getdata(c2),[illum.mainPath '\Data\' date '\' datFol '\' c2Fol '\' fName numReadable '.' imType]);
