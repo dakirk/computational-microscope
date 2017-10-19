@@ -1,4 +1,10 @@
-% Sums a series of black and white images
+%Author: David Kirk
+
+%Purpose: Sums a series of black and white images. This script was
+%primarily used for determining the real grid shape based on the images
+%taken by the secondary camera. Currently not useful, because there is no
+%secondary camera.
+
 folder = uigetdir('D:\David\SP-IRIS Project\Data')
 imNames = dir(folder);
 imList = {}

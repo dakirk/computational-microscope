@@ -1,4 +1,13 @@
-%Finish later--all buttons laid out, just needs functionality
+%Author: David Kirk
+
+%Purpose: This installer is intended to make the installation of CISL's
+%camera control program simple on any Windows computer with Matlab and the
+%necessary camera drivers. It allows the user to select a home directory
+%for code, images, and other data to be stored, and then creates and
+%populates that directory. The user can also choose to run the camera
+%control program immediately after installation. As of yet, the user still
+%needs to remember where they installed the control program, because in the
+%future they will need to run the program from its home folder.
 
 
 function varargout = Installer(varargin)

@@ -1,19 +1,26 @@
+
+%Author: Alex Matlock, modified by David Kirk
+
+%Purpose: captureScript is run when the user presses the "Capture" button
+%in the main GUI. It handles the photographing and saving of each image and
+%the movement of the illumination source throughout each run, as defined by
+%the global "illum" variable. It uses the genMotorGrid function to acquire
+%the coordinates for each illumination stage movement, and then moves that
+%stage to those coordinates in sync with the camera. Once all photos are
+%stored to memory, it saves these photos to a folder bearing the run name
+%in a date-specific directory within the "Data" folder.
+
+%Things to improve on
+% 1. On startup, the software only thinks that the max cam1 shutter speed
+% time is 24ms where it can really be set to 700ms in 16 bit mode
+% (Grasshopper camera only)
+
+
 %%
 tstart = tic;
 %clear all
 %close all
 %%
-%Program Notes
-
-%Things to improve on
-% 1. Expand Motor control capabilities beyond basic control scheme
-% 2. Make obtaining today's date automatic for this system
-% 3. Add automatic control of source stadjgkge to system
-% 4. Convert data acquisition method to saving all oblique illumination
-%    images into a single 3-D data stack 
-% 5. On startup, the software only thinks that the max cam1 shutter speed
-% time is 24ms where it can really be set to 700ms in 16 bit mode
-
 
 %--------------------------Variable Initialization------------------------%
 %Save Folder Parameters

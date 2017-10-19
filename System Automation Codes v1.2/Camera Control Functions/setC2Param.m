@@ -2,6 +2,8 @@ function setC2Param(cam, camSet, pStruct)
 %%
 %setC2Param Function
 %
+%Author: Alex Matlock
+%
 %Purpose: This function simply groups the various camera control parameters
 %for being initialized in a single function. This does not contribute
 %anything else to the camera operation. 

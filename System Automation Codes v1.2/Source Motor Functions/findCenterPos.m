@@ -1,15 +1,17 @@
 function [xyopt] = findCenterPos(m1,m2,cam1,startPos)
 %%
 
-%David's notes:
-%Added waitForMovement functions, should speed things up a bit
-%Currently the mean2 function causes considerable delays--consider sampling
-%only part of image (or even a single pixel!) instead of whole image?
+% David's notes:
+% Added waitForMovement functions, should speed things up a bit
+% Currently the mean2 function causes considerable delays--consider sampling
+% only part of image (or even a single pixel!) instead of whole image?
 % Reducing sample size to 1024x1024 around center of image
 % Center seems to usually be close to 4mm horizontal, 4.15mm vertical
 
 %findCenterPos Function
-%
+%Author: Alex Matlock
+
+
 %Purpose: This function provides a basic optimization approach to finding a
 %center position for the illumination source in the microscope objective
 %based on the intensity measured by the microscope's main camera. This

@@ -1,14 +1,8 @@
-%Author: David Kirk
-
 %Purpose: This GUI allows the user to manipulate the sample stage to some
 %degree, and view the results through an updatable image from the main
 %camera. It allows fine control of the sample stage's position in three
 %dimensions, at a range of 20um. While limited, this is enough to fine-tune
 %a focusing job that was initially done by hand, and because it can be done
-%remotely, the user does not have to worry about producing air currents
-%that could misallign the system. The user may also use this GUI to pan
-%limitedly around the sample. Additionally, this program may be used to
-%confirm that the main camera is working properly.
 
 
 function varargout = SampleStageControl(varargin)
