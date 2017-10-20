@@ -1,0 +1,18 @@
+
+
+%[imgName, imgFolder] = uigetfile()
+%fullImgPath = fullfile(imgFolder, imgName)
+fullImgPath = 'D:\David\SP-IRIS Project\Data\171020\Circular test 1\Camera 1\Image_013.tiff'
+img = imread(fullImgPath);
+FTImg = abs(fourierTransform(img));
+
+%get the circle 
+compareCircle = genCircle(3.45E-3, 2048);
+overlap = FTImg.*double(compareCircle);
+
+figure
+imagesc(overlap, [1E5, 1E7])
+disp(sum(overlap(:)))
+
+
+
