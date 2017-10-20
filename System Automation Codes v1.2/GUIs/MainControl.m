@@ -32,10 +32,19 @@ PROJECT VERSION HISTORY
         with other magnifications may be erratic
 10/05/17: Version 1.2b
     -New version for Blackfly S camera
-10/18/17: Improving comments (no new features)
+10/18/17: 
+    -Improved comments (no new features)
+10/20/17: 
+    -Fixed matrix size mismatch in capture script
+    -Started work on new centering function
 
 TO DO:
     -Fix centering code to work for 10x and other low magnifications
+        -Continue work on Fourier transform-based centering function
+    -Add a utility script to take pictures while moving sample stage along 
+    the z-axis
+
+SKIPPABLE:
     -Allow user to switch between Blackfly S and Grasshopper (or add
     installer option)
     -Reduce the number of global variables
@@ -160,9 +169,9 @@ else
     illum.centerPos = [4 3.6651]; %Saves illum. grid center, used first for initial motor position guess
     illum.numImg = 169; %Sets number of images to obtain
     illum.fL = 20; %Lens focal length/working distance (mm), used for circular grid only
-    illum.NAval = [0 .148]; %Illumination NA range, not currently used
+    illum.NAval = [0 .148]; 
     illum.fpath = strcat([illum.mainPath, '\Documentation\Source Grids']);
-    illum.pixL = 5.50E-03
+    illum.pixL = 5.50E-03 %milimeters
     illum.Mag = 10
     illum.nPix = [2048 2048]
     illum.lambda = 5.30E-04
@@ -372,12 +381,12 @@ global datFol
 global dateStr
 
 %%
-overwrite = 'Ok'
-fileList = dir([illum.mainPath '\Data\' dateStr])
-for i = 1:size(fileList)
-    disp(strcmp(datFol, fileList(i).name))
-    if strcmp(datFol, fileList(i).name)
-        overwrite = questdlg('Your current run shares the name of a previous run. Overwrite previous run?', 'Overwrite?', 'Ok', 'Cancel', 'Cancel')
+overwrite = 'Ok';
+fileList = dir([illum.mainPath '\Data\' dateStr]);
+for i = 1:size(fileList);
+    disp(strcmp(datFol, fileList(i).name));
+    if strcmp(datFol, fileList(i).name);
+        overwrite = questdlg('Your current run shares the name of a previous run. Overwrite previous run?', 'Overwrite?', 'Ok', 'Cancel', 'Cancel');
     end
 end
 %%
@@ -424,21 +433,21 @@ if strcmp(overwrite, 'Ok')
     % Writes a new entry to the log file
     fields = fieldnames(illum);
     fid=fopen([illum.mainPath, '\Log.txt'],'a');
-    currDate = datestr(datetime)
+    currDate = datestr(datetime);
     fprintf(fid, ['\r\n' currDate '. Run name: "' datFol '".'])
     
     for i = 1:numel(fields)
-        data = illum.(fields{i})
+        data = illum.(fields{i});
         if isnumeric(data)
-            data = num2str(data)
+            data = num2str(data);
         elseif ischar(data)
-            strCell = strsplit(data, '\')
-            data = strjoin(strCell, '\\\')
+            strCell = strsplit(data, '\');
+            data = strjoin(strCell, '\\\');
         end
-        fprintf(fid, '\r\n    ') 
-        fprintf(fid, '%-20s%s', [fields{i} ': '],data)
+        fprintf(fid, '\r\n    '); 
+        fprintf(fid, '%-20s%s', [fields{i} ': '],data);
     end
-    fprintf(fid, '\r\n')
+    fprintf(fid, '\r\n');
     %fprintf(fid, ['\r\n    ' illum.pitch])
     %%
         
@@ -446,14 +455,14 @@ if strcmp(overwrite, 'Ok')
     captureScript
 
     % Updates status text to reflect final positions
-    [tst1,pos1] = m1.GetPosition(0,0)
-    [tst2,pos2] = m2.GetPosition(0,0)
-    pos1mm = strcat(num2str(pos1),'mm')
-    pos2mm = strcat(num2str(pos2),'mm')
-    set(handles.text6, 'String', pos2mm)
-    set(handles.text8, 'String', pos1mm)
-    set(handles.text5, 'String', 'Stopped')
-    set(handles.text9, 'String', 'Stopped')
+    [tst1,pos1] = m1.GetPosition(0,0);
+    [tst2,pos2] = m2.GetPosition(0,0);
+    pos1mm = strcat(num2str(pos1),'mm');
+    pos2mm = strcat(num2str(pos2),'mm');
+    set(handles.text6, 'String', pos2mm);
+    set(handles.text8, 'String', pos1mm);
+    set(handles.text5, 'String', 'Stopped');
+    set(handles.text9, 'String', 'Stopped');
 
     set(handles.pushbutton1, 'Enable', 'On'); %Enables capture button
     set(handles.edit1, 'Enable', 'On'); %Enables vertical homing button
