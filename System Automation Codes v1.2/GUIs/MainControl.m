@@ -37,6 +37,8 @@ PROJECT VERSION HISTORY
 10/20/17: 
     -Fixed matrix size mismatch in capture script
     -Started work on new centering function
+10/26/17:
+    -Added a utility script to take pictures at different focuses
 
 TO DO:
     -Fix centering code to work for 10x and other low magnifications
