@@ -1,17 +1,18 @@
 function returnCircle = genCircle(pixelSize, numPixels)
 
 %%
-global illum
-
+%global illum
+mag = 10
+lambda = 5.3E-4
 NA = .25
-deltaSF = 1/(numPixels*(pixelSize/illum.Mag))
+deltaSF = 1/(numPixels*(pixelSize/mag))
 
 uh = ((-numPixels/2)*deltaSF):(deltaSF):(((numPixels/2)-1)*deltaSF);
 vh = ((-numPixels/2)*deltaSF):(deltaSF):(((numPixels/2)-1)*deltaSF);
 
 [u,v] = meshgrid(uh,vh);
 
-circleMap = sqrt( ((u./(NA/illum.lambda)).^2) + ((v./(NA/illum.lambda)).^2) );
+circleMap = sqrt( ((u./(NA/lambda)).^2) + ((v./(NA/lambda)).^2) );
 returnCircle = circ(circleMap);
 
 %HeatMap(double(filter));
