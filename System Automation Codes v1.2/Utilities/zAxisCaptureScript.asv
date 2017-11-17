@@ -111,8 +111,8 @@ end
 
 for k = 1:numImages+1
     
-    imgMat = getdata(c1,c1.FramesPerTrigger,'uint16'); %generate temp matrix to store image
-    c1Mat(:,:,k) = imgMat; %copy temp matrix into saving matrix 
+    imgMat = getdata(c1,c1.FramesPerTrigger,'uint16');
+    c1Mat(:,:,k) = imgMat; 
     numReadable = sprintf('%.3d', k); %makes file names start with extra zeros if not 3 digits (ex: 001, 002, etc.)
     imwrite(c1Mat(:,:,k),[mainPath '\Data\' dateFormatted '\' datFol '\' c1Fol '\' fName numReadable '.' imType]);
     disp('');

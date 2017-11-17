@@ -46,8 +46,6 @@ TO DO:
     -Fix centering code to work for 10x and other low magnifications
         -Continue work on Fourier transform-based centering function
     -Create launcher (possibly executable?)
-        -Shortcut on desktop that launches the main program
-        -Created by launcher
 
 
 SKIPPABLE:
