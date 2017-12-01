@@ -95,8 +95,7 @@ fSet.iter = calCnt
 illumPos = genMotorGrid(illum.grid,iSet,illum.pitch,illum.NAval,illum.centerPos,fSet);
 %-------------------------------------------------------------------------%
 
-
-illum.numImg = size(illumPos,1);
+num = illumPos(1); %Grabs initial image number in source grid
 
 %% Writes a new entry to the log file
     
@@ -189,7 +188,6 @@ c1Mat = uint16(zeros(2048,2048,size(illumPos, 1))); %Preallocates 3-D matrix for
 
 start(c1)
 %start(c2) <--unused currently
-num = illumPos(1); %Grabs initial image number in source grid
 totalImages = sprintf('%.3d',size(illumPos,1));
 
 for k = 1:size(illumPos,1)

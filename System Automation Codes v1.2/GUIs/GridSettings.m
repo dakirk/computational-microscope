@@ -175,8 +175,6 @@ contents = cellstr(get(hObject, 'String'))
 currVal = contents{get(hObject,'Value')}
 
 switch currVal % Switches grid shape
-    case 'Square'
-        illum.grid = 'square' 
     case 'Square NA'
         illum.grid = 'squareNA' 
     case 'Circular'
@@ -201,12 +199,10 @@ currSetting = illum.grid
 
 % Sets initial value for dropdown menu (1 is square, 2 is square NA)
 switch currSetting
-    case 'square'
-        set(hObject, 'Value', 1)
     case 'squareNA'
-        set(hObject, 'Value', 2)
+        set(hObject, 'Value', 1)
     case 'circle'
-        set(hObject, 'Value', 3)
+        set(hObject, 'Value', 2)
 end
 
 % --- Text box for magnification

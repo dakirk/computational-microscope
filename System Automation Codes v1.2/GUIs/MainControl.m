@@ -41,6 +41,9 @@ PROJECT VERSION HISTORY
     -Added a utility script to take pictures at different focuses
 11/17/17:
     -Fixed bug in utility script, added better commenting
+12/01/17:
+    -Removed Square grid shape from the options
+    -Log now records number of images accurately
 
 TO DO:
     -Fix centering code to work for 10x and other low magnifications
@@ -417,30 +420,7 @@ if strcmp(overwrite, 'Ok')
     set(handles.text8, 'String', '')
     drawnow
 
-    %% Writes a new entry to the log file
-    
-    % Opens log file with a filepath based on the main path
-    fields = fieldnames(illum);
-    fid=fopen([illum.mainPath, '\Log.txt'],'a');
-    
-    % Generates first line, which includes the date and run name
-    currDate = datestr(datetime);
-    fprintf(fid, ['\r\n' currDate '. Run name: "' datFol '".'])
-    
-    % Adds a new line for every variable in the illum structure
-    for i = 1:numel(fields)
-        data = illum.(fields{i});
-        if isnumeric(data) % If it's a number
-            data = num2str(data);
-        elseif ischar(data) % If it's a string
-            strCell = strsplit(data, '\'); % If there are backslashes, splits into substrings
-            data = strjoin(strCell, '\\\'); % Re-adds backslashes with escapes so they're written properly
-        end
-        fprintf(fid, '\r\n    '); 
-        fprintf(fid, '%-20s%s', [fields{i} ': '], data); % Writes new line to log
-    end
-    
-    fprintf(fid, '\r\n');
+
         
     %% Runs the image capture script
     captureScript
